@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="creation.frames.SaveDialog">
+  <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
+    <constraints>
+      <xy x="48" y="119" width="250" height="150"/>
+    </constraints>
+    <properties>
+      <maximumSize width="250" height="150"/>
+      <minimumSize width="250" height="150"/>
+      <preferredSize width="250" height="150"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="8259d" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="5" left="5" bottom="5" right="5"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <alignmentX value="0.2"/>
+          <alignmentY value="0.2"/>
+          <background color="-10197916"/>
+        </properties>
+        <border type="bevel-lowered"/>
+        <children>
+          <component id="d9045" class="javax.swing.JComboBox" binding="comboBox" default-binding="true">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <editable value="false"/>
+              <model>
+                <item value="1 - Unique &lt;Empty&gt;"/>
+                <item value="2 - Duo &lt;Empty&gt;"/>
+                <item value="3 - Trinity &lt;Empty&gt;"/>
+                <item value="4 - Quadro &lt;Empty&gt;"/>
+                <item value="5 - Pentagram &lt;Empty&gt;"/>
+                <item value="6 - Hexagon &lt;Empty&gt;"/>
+                <item value="7 - Seas &lt;Empty&gt;"/>
+                <item value="8 - Octet &lt;Empty&gt;"/>
+                <item value="9 - Months &lt;Empty&gt;"/>
+              </model>
+            </properties>
+          </component>
+          <component id="20e98" class="javax.swing.JButton" binding="buttonOK">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <minimum-size width="100" height="-1"/>
+                <preferred-size width="100" height="-1"/>
+                <maximum-size width="100" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <alignmentY value="0.0"/>
+              <text value="Save"/>
+            </properties>
+          </component>
+          <component id="ddbcf" class="javax.swing.JButton" binding="buttonCancel">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <minimum-size width="100" height="-1"/>
+                <preferred-size width="100" height="-1"/>
+                <maximum-size width="100" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <alignmentY value="0.0"/>
+              <text value="Cancel"/>
+            </properties>
+          </component>
+          <component id="4b32d" class="javax.swing.JButton" binding="deleteBtn">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <minimum-size width="100" height="-1"/>
+                <preferred-size width="100" height="-1"/>
+                <maximum-size width="100" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <alignmentY value="0.0"/>
+              <enabled value="false"/>
+              <text value="Delete"/>
+            </properties>
+          </component>
+          <component id="60e6e" class="javax.swing.JLabel" binding="textLbl">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <alignmentY value="0.0"/>
+              <focusable value="false"/>
+              <font name="MV Boli" size="16"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <requestFocusEnabled value="false"/>
+              <text value=" Choose Slot:"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
