@@ -41,12 +41,12 @@ public class Parent extends JFrame {
     private JButton optionsBtn;
 
     private boolean pauseFlag;
-    private boolean numberHelperFlag=true;
     private boolean paletteFlag;
     private boolean createMode = true;
     private boolean unsaved = false;
     private boolean timerIsStarted = false;
     private boolean closeFlag=false;
+    private boolean highlightCell=false;
     private boolean strikeRow=false;
     private boolean strikeCol=false;
     private boolean strikeSquare=false;
@@ -237,10 +237,6 @@ public class Parent extends JFrame {
         addMouseListener(frameDragListener);
         addMouseMotionListener(frameDragListener);
 
-        KeyboardFocusManager.getCurrentKeyboardFocusManager().
-                addPropertyChangeListener("focusOwner", evt -> numberHelperFlag = evt.getNewValue() != null);
-
-
         //</editor-fold>
 
 
@@ -257,24 +253,18 @@ public class Parent extends JFrame {
 
             if(!appData.isMuteSounds()) { Sounds.notifySound(); }
 
-            numberHelperFlag=false;
-
             optionsDialog = new OptionsDialog(this);
             optionsDialog.setUndecorated(true);
             optionsDialog.pack();
             optionsDialog.setLocation(this.getLocation().x+optionsDialog.getWidth()/4, this.getLocation().y + optionsDialog.getHeight()/4-4);
             optionsDialog.setVisible(true);
 
-            numberHelperFlag=true;
-
             if (optionsDialog.getResponse().equals("Marking")) onMarkFire();
             if (optionsDialog.getResponse().equals("Approved")) onApproveFire();
             if (optionsDialog.getResponse().equals("Discarded")) onDiscardFire();
             if (optionsDialog.getResponse().equals("")) progressBar.setString("");
 
-
             fldNames.get(sudokuData.getFocusPos()).grabFocus();
-
 
         });
 
@@ -382,8 +372,6 @@ public class Parent extends JFrame {
 
             if(!appData.isMuteSounds()) {Sounds.notifySound();}
 
-            numberHelperFlag=false;
-
             HintsDialog hintsDialog = new HintsDialog(this);
 
             hintsDialog.setUndecorated(true);
@@ -391,7 +379,6 @@ public class Parent extends JFrame {
             hintsDialog.setLocation(getLocation().x, getLocation().y+1);
             hintsDialog.setVisible(true);
 
-            numberHelperFlag=true;
 
 /*
 
@@ -732,14 +719,6 @@ public class Parent extends JFrame {
 
                     paletteFlag=false;
 
-                    if(     !createMode
-                            && !sudokuData.isMarkingNumbers()
-                            && numberHelperFlag
-                            && timerIsStarted
-                            && sudokuData.getAssistanceLevel() == AssistanceLevel.Full
-                            && sudokuData.getProgress()<63
-                    )
-                    startFocusPosHelper(tIndex);
                     sudokuData.setFocusPos(tIndex);
 
                     fldNames.get(tIndex).setCaretPosition(fldNames.get(tIndex).getDocument().getLength());
@@ -770,9 +749,10 @@ public class Parent extends JFrame {
                     }
 
                     if (!sudokuData.getNumberBackgroundColors()[tIndex / 9][tIndex % 9].equals(appData.getStonedNumberBackgroundColor())) {
-
                         fldNames.get(tIndex).setBackground(Color.WHITE);
                     }
+
+                    if (highlightCell) {highlightCell=false; alterFieldColor(tIndex, new Color(200, 255, 200), 2000, "background");}
                 }
 
             });
@@ -795,6 +775,10 @@ public class Parent extends JFrame {
                             if(!appData.isMuteSounds()) {Sounds.delete();}
 
                         }
+                    }
+
+                    if (!createMode && me.getButton() == MouseEvent.BUTTON2) {
+                        askHighlightHelp();
                     }
 
                     if (appData.isShowPalette() && fldNames.get(tIndex).isEditable() && fldNames.get(tIndex).hasFocus() && me.getButton() == MouseEvent.BUTTON1 ) {
@@ -943,20 +927,19 @@ public class Parent extends JFrame {
             for (int first = 0; first < 9; first++)
                 for (int second = 0; second < 9; second++) {
 
-                    //row
-                    if (first != second && aCells[first][step] == aCells[second][step] && aCells[first][step]!=0) {
+                //row
+                if (first != second && aCells[first][step] == aCells[second][step] && aCells[first][step]!=0) {
                         duplicate = true;
                         break outer;
                     }
 
-                    //col
-                    if (first != second && aCells[step][first] == aCells[step][second]&& aCells[step][second]!=0) {
+                //col
+                if (first != second && aCells[step][first] == aCells[step][second]&& aCells[step][second]!=0) {
                         duplicate = true;
                         break outer;
                     }
 
-
-                }
+            }
         }
 
 
@@ -998,7 +981,6 @@ public class Parent extends JFrame {
             }
 
         }
-
 
         progressBarText("Approved Marked numbers",4000,false);
 
@@ -1117,12 +1099,38 @@ public class Parent extends JFrame {
 
     }
 
-    private void startFocusPosHelper(int aPos) {
+    private void askHighlightHelp() {
 
-        java.util.Timer timer = new java.util.Timer();
-        timer.schedule(new FocusHelper(aPos), 120000);
+        int pos = getCellFreeWeight(false)[3];
+
+        if (pos != -1) {
+
+            if (pos != sudokuData.getFocusPos()) {
+
+                fldNames.get(pos).grabFocus();
+
+                appData.decreaseTokens(1);
+
+                if (fio.onExit()) progressBarText("Error", 2500, false);
+
+                hintBtn.setToolTipText("Available Hint Tokens: " + appData.getGameTokens());
+
+                progressBarText("Target Cell Moved, Hint Token Deducted", 4000, false);
+
+                highlightCell=true;
+
+            }
+
+            if (!appData.isMuteSounds()) Sounds.helper();
+
+            alterFieldColor(pos, new Color(200, 255, 200), 2000, "background");
+
+        }
+
 
     }
+
+
 
     private void onNewGame(){
 
@@ -2282,7 +2290,7 @@ public class Parent extends JFrame {
 
     }
 
-    private class FocusHelper extends TimerTask{
+  /*  private class FocusHelper extends TimerTask{
 
         private int focusTo;
 
@@ -2292,21 +2300,13 @@ public class Parent extends JFrame {
 
         public void run() {
 
-            if(!timerIsStarted && !numberHelperFlag) {cancel();}
+            if (focusTo == sudokuData.getFocusPos()) {
 
-            if(     !createMode
-                    && !sudokuData.isMarkingNumbers()
-                    && timerIsStarted
-                    && numberHelperFlag
-                    && sudokuData.getAssistanceLevel() == AssistanceLevel.Full)
+                int pos = getCellFreeWeight(false)[3];
 
-            if(focusTo==sudokuData.getFocusPos()) {
+                if (pos != -1) {
 
-                if(getCellFreeWeight(false)[3]!=-1) {
-
-                    int pos = getCellFreeWeight(false)[3];
-
-                    if(pos!=sudokuData.getFocusPos()) {
+                    if (pos != sudokuData.getFocusPos()) {
 
                         fldNames.get(pos).grabFocus();
 
@@ -2322,14 +2322,17 @@ public class Parent extends JFrame {
 
                     }
 
-                    if (!appData.isMuteSounds()) { Sounds.helper(); }
-                    alterFieldColor(pos,new Color(200, 255, 200),2000,"background");
+                    if (!appData.isMuteSounds()) {  Sounds.helper();  }
+
+                    alterFieldColor(pos, new Color(200, 255, 200), 2000, "background");
+
                 }
 
             }
 
         }
-    }
+
+    }*/
 
     private static class ProgressPainter implements Painter {
 

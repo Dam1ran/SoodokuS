@@ -53,23 +53,23 @@ public class AboutDialog extends JDialog {
                 "Those puzzles that has no solutions are solved even quicker.\n" +
                 "    When Generating new Game, Generator creates initial number pattern, then feed it to SoodokuS Generator™ " +
                 "(although SoodokuS Generator™ return different puzzles even from blank board).\n" +
-                "If a solution is found then certain numbers are cleared from the board so all small squares has approximately same number of clues." +
-                " Number of remaining clues is set as Difficulty.\n" +
-                "    This board has assistance which makes Game experience better.\n" +
-                "Harder the difficulty, less assistance level, and less time spent leads to more earned Hint Tokens." +
+                "    If a solution is found then certain numbers are cleared from the board so all small squares has approximately same number of clues.\n" +
+                "Number of remaining clues is set as Difficulty.\n\n" +
+                "    This board has assistance which makes Game experience better.\n\n" +
+                "    Harder the difficulty, less assistance level, and less time spent leads to more earned Hint Tokens." +
                 " Striking row, column or square will give bonus Tokens.\n" +
-                "Diagonals constraint is not set, however it can give bonus Tokens.\n" +
-                "User can Set his puzzle also, SoodokuS(tar) will count initial clues and it will assign a difficulty to it.\n" +
-                "Adding Hint concept makes this Game little more attractive, User can use Hint Tokens at will, to help solve Sudoku puzzle.\n" +
-                "Before Hint is requested, SoodokuS Generator™ will try to solve The board, if there is a solution then Hint is applied at choice\n" +
+                "Diagonals constraint is not set, however it can give bonus Tokens.\n\n" +
+                "    User can Set his puzzle also, SoodokuS(tar) will count initial clues and it will assign a difficulty to it.\n" +
+                "    Adding Hint concept makes this Game little more attractive, User can use Hint Tokens at will, to help solve Sudoku puzzle.\n\n" +
+                "   Before Hint is requested, SoodokuS Generator™ will try to solve The board, if there is a solution then Hint is applied at choice\n" +
                 "\n" +
-                "In dependency which Assistance level is selected SoodokuS(star) will apply natural restrictions." +
-                " Also if target cell stood still for 2 minutes time span the board will help finding best possible cell" +
-                " to fill in, Full Assistance only, when not marking numbers(under 63 clues progress) and when game window is focused.\n" +
+                "    In dependency which Assistance level is selected SoodokuS(star) will apply natural restrictions." +
+                " Also if mouse wheel is pressed board will help find best possible cell" +
+                " to fill in.\n" +
                 "    User can use keyboard, mouse wheel or number palette(if enabled) - double click on cell. Up to 8+1 slots available for Save/Load your Sudoku."+
                 "\n \n" +
-                "Another thing that I have to mention that I have some programming experience in C++.\n" +
-                "This is my first project in Java. It was intended to get used to Java Programming language. As a by product I was forced to learn JFrames also :). Besides back end logic and algorithms, multiple Java features was used(~6k LOC).\n" +
+                "    Another thing that I have to mention that I have some programming experience in C++.\n" +
+                "    This is my first project in Java. It was intended to get used to Java Programming language. As a by product I was forced to learn JFrames also :). Besides back end logic and algorithms, multiple Java features was used(~6k LOC).\n" +
                 "\n" +
                 "If you wish to Donate\n" +
                 "you will receive a Named copy as a gift!\n" +

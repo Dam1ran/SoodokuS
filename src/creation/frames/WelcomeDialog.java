@@ -65,7 +65,7 @@ public class WelcomeDialog extends JDialog{
                 "&nbsp &nbsp &nbsp &nbsp Earn Hint Tokens by solving SoodokuS.<br>" +
                 "The Hardest SoodokuS and lesser Assistance Level yields<br>"+
                 "potential more Hint Tokens, solving quicker (10 minutes ranges[3x10]) also adds bonuses. "+
-                "Every start of a game costs 25 Tokens. If active cell not moved in 2 minutes then helper will move(at Full Assistance) it for 1 Hint automatically.<br><br>"+
+                "Every start of a game costs 25 Tokens. Board assist at mouse wheel press.<br><br>"+
                 "&nbsp &nbsp &nbsp &nbsp Using any Hints will tell SoodokuS to solve your board, "+
                 "if your board has solutions then it will return requested Hint "+
                 "according to first found solution.<br>"+
