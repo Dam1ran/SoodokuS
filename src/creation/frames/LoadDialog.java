@@ -29,6 +29,8 @@ public class LoadDialog extends JDialog {
 
     LoadDialog(Parent aParent, FIO aFio) {
 
+        setAlwaysOnTop(true);
+
         this.fio = aFio;
         this.parent=aParent;
 

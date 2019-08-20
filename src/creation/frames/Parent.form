@@ -1941,7 +1941,7 @@
           <borderPainted value="true"/>
           <contentAreaFilled value="true"/>
           <defaultCapable value="true"/>
-          <enabled value="true"/>
+          <enabled value="false"/>
           <focusable value="false"/>
           <font size="11"/>
           <horizontalAlignment value="0"/>

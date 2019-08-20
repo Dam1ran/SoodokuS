@@ -15,6 +15,7 @@ public class Sounds {
     private static Clip startSound;
     private static Clip clearBoardSound;
     private static Clip wonGameSound;
+    private static Clip lockSound;
 
     public  static AudioInputStream audioIn;
 
@@ -69,7 +70,7 @@ public class Sounds {
         notify.open(audioIn);
 
         gainControl = (FloatControl) notify.getControl(FloatControl.Type.MASTER_GAIN);
-        gainControl.setValue(-5.0f);
+        gainControl.setValue(-10.0f);
 
         //================================================
         url = Sounds.class.getClassLoader().getResource("ding.wav");
@@ -110,6 +111,17 @@ public class Sounds {
 
         gainControl = (FloatControl) wonGameSound.getControl(FloatControl.Type.MASTER_GAIN);
         gainControl.setValue(-5.0f);
+
+
+        //================================================
+        url = Sounds.class.getClassLoader().getResource("lock.wav");
+        audioIn = AudioSystem.getAudioInputStream(url);
+
+        lockSound = AudioSystem.getClip();
+        lockSound.open(audioIn);
+
+        gainControl = (FloatControl) lockSound.getControl(FloatControl.Type.MASTER_GAIN);
+        gainControl.setValue(-15.0f);
 
 
     }
@@ -167,6 +179,12 @@ public class Sounds {
         wonGameSound.stop();
         wonGameSound.setMicrosecondPosition(0);
         wonGameSound.start();
+    }
+
+    public static void lock(){
+        lockSound.stop();
+        lockSound.setMicrosecondPosition(0);
+        lockSound.start();
     }
 
 

@@ -27,6 +27,8 @@ public class SaveDialog extends JDialog {
 
     SaveDialog(Parent aParent, FIO aFio) {
 
+        setAlwaysOnTop(true);
+
         this.fio = aFio;
         this.parent = aParent;
 

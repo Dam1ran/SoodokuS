@@ -32,6 +32,7 @@ public class NumberPalette extends JDialog {
 
         setContentPane(contentPane);
 
+        setAlwaysOnTop(true);
 
         TimerTask initTask = new TimerTask() {
             @Override

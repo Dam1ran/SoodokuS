@@ -23,8 +23,6 @@ import java.util.*;
 
 
 import static java.awt.event.KeyEvent.*;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 public class Parent extends JFrame {
 
@@ -41,17 +39,6 @@ public class Parent extends JFrame {
     private JButton clearBtn;
     private JButton hintBtn;
     private JButton optionsBtn;
-
-/*    private Clip deleteSound;
-    private Clip wrongNumberSound;
-    private Clip earnedSound;
-    private Clip helperSound;
-            Clip wheelRotateSound;
-            Clip notify;
-    private Clip startSound;
-    private Clip clearBoardSound;
-    private Clip wonGameSound;
-    private AudioInputStream audioIn;*/
 
     private boolean pauseFlag;
     private boolean numberHelperFlag=true;
@@ -85,11 +72,12 @@ public class Parent extends JFrame {
     private int[] intermediateSpiral = new int[9];
     private int   drainIndex=0;
     private int[] drainedNumbers = new int[81];
+    private boolean wonFlag=false;
 
     FIO getFio() { return fio; }
     void setCloseFlag() { this.closeFlag = true; }
     void setPauseFlag() { this.pauseFlag = true; }
-    boolean isCreateMode() {  return createMode;  }
+    boolean isCreateMode() {  return !createMode;  }
 
 
     //<editor-fold desc=" TEXTFIELDS DECLARATION">
@@ -164,7 +152,7 @@ public class Parent extends JFrame {
         //<editor-fold desc="FRAME RELATED">
 
         try {
-            URL resource = getClass().getResource("/Icon.png");
+            URL resource = getClass().getResource("/bstar.png");
             BufferedImage image = ImageIO.read(resource);
             setIconImage(image);
         } catch (IOException e) {
@@ -222,6 +210,12 @@ public class Parent extends JFrame {
 
                 }
 
+                if (SwingUtilities.isRightMouseButton(e)) {
+
+                    setExtendedState(JFrame.ICONIFIED);
+
+                }
+
             }
 
             public void mouseDragged(MouseEvent e) {
@@ -242,6 +236,10 @@ public class Parent extends JFrame {
         FrameDragListener frameDragListener = new FrameDragListener(this);
         addMouseListener(frameDragListener);
         addMouseMotionListener(frameDragListener);
+
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().
+                addPropertyChangeListener("focusOwner", evt -> numberHelperFlag = evt.getNewValue() != null);
+
 
         //</editor-fold>
 
@@ -266,6 +264,8 @@ public class Parent extends JFrame {
             optionsDialog.pack();
             optionsDialog.setLocation(this.getLocation().x+optionsDialog.getWidth()/4, this.getLocation().y + optionsDialog.getHeight()/4-4);
             optionsDialog.setVisible(true);
+
+            numberHelperFlag=true;
 
             if (optionsDialog.getResponse().equals("Marking")) onMarkFire();
             if (optionsDialog.getResponse().equals("Approved")) onApproveFire();
@@ -322,21 +322,13 @@ public class Parent extends JFrame {
         });
 
 
-        //<editor-fold desc="ToDos">
-
-
-        //todo implement solve/hint
-
-
-        //</editor-fold>
-
-
         //save
         saveBtn.addActionListener(e -> {
 
             if(numberPalette!=null) numberPalette.dispose();
 
             if (timerIsStarted) startStopBtn.doClick();
+
 
             saveDialog = new SaveDialog(this,fio);
 
@@ -375,8 +367,8 @@ public class Parent extends JFrame {
                 clearDialog.setUndecorated(true);
                 clearDialog.pack();
                 clearDialog.setLocation(this.getLocation().x+clearDialog.getWidth()/4, this.getLocation().y + clearDialog.getHeight()*2+71);
-
                 clearDialog.setVisible(true);
+
 
             }
 
@@ -390,15 +382,74 @@ public class Parent extends JFrame {
 
             if(!appData.isMuteSounds()) {Sounds.notifySound();}
 
+            numberHelperFlag=false;
+
+            HintsDialog hintsDialog = new HintsDialog(this);
+
+            hintsDialog.setUndecorated(true);
+            hintsDialog.pack();
+            hintsDialog.setLocation(getLocation().x, getLocation().y+1);
+            hintsDialog.setVisible(true);
+
+            numberHelperFlag=true;
+
+/*
+
+            Color color = new Color(255, 206, 0);
+            fldNames.get(4). setForeground(color); fldNames.get(4). setText("@");
+            fldNames.get(12).setForeground(color); fldNames.get(12).setText("@");
+            fldNames.get(14).setForeground(color); fldNames.get(14).setText("@");
+            fldNames.get(21).setForeground(color); fldNames.get(21).setText("@");
+            fldNames.get(23).setForeground(color); fldNames.get(23).setText("@");
+
+            fldNames.get(27).setForeground(color); fldNames.get(27).setText("@");
+            fldNames.get(28).setForeground(color); fldNames.get(28).setText("@");
+            fldNames.get(29).setForeground(color); fldNames.get(29).setText("@");
+            fldNames.get(30).setForeground(color); fldNames.get(30).setText("@");
+            fldNames.get(31).setForeground(color); fldNames.get(31).setText("@");
+            fldNames.get(32).setForeground(color); fldNames.get(32).setText("@");
+            fldNames.get(33).setForeground(color); fldNames.get(33).setText("@");
+            fldNames.get(34).setForeground(color); fldNames.get(34).setText("@");
+            fldNames.get(35).setForeground(color); fldNames.get(35).setText("@");
 
 
-            onHintFire();
+            fldNames.get(37).setForeground(color); fldNames.get(37).setText("@");
+            fldNames.get(38).setForeground(color); fldNames.get(38).setText("@");
+            fldNames.get(39).setForeground(color); fldNames.get(39).setText("@");
+            fldNames.get(40).setForeground(color); fldNames.get(40).setText("@");
+            fldNames.get(41).setForeground(color); fldNames.get(41).setText("@");
+            fldNames.get(42).setForeground(color); fldNames.get(42).setText("@");
+            fldNames.get(43).setForeground(color); fldNames.get(43).setText("@");
+
+            fldNames.get(47).setForeground(color); fldNames.get(47).setText("@");
+            fldNames.get(48).setForeground(color); fldNames.get(48).setText("@");
+            fldNames.get(49).setForeground(color); fldNames.get(49).setText("@");
+            fldNames.get(50).setForeground(color); fldNames.get(50).setText("@");
+            fldNames.get(51).setForeground(color); fldNames.get(51).setText("@");
+
+            fldNames.get(55).setForeground(color); fldNames.get(55).setText("@");
+            fldNames.get(56).setForeground(color); fldNames.get(56).setText("@");
+            fldNames.get(57).setForeground(color); fldNames.get(57).setText("@");
+            fldNames.get(59).setForeground(color); fldNames.get(59).setText("@");
+            fldNames.get(60).setForeground(color); fldNames.get(60).setText("@");
+            fldNames.get(61).setForeground(color); fldNames.get(61).setText("@");
+
+            fldNames.get(64).setForeground(color); fldNames.get(64).setText("@");
+            fldNames.get(65).setForeground(color); fldNames.get(65).setText("@");
+            fldNames.get(69).setForeground(color); fldNames.get(69).setText("@");
+            fldNames.get(70).setForeground(color); fldNames.get(70).setText("@");
+
+            fldNames.get(72).setForeground(color); fldNames.get(72).setText("@");
+            fldNames.get(80).setForeground(color); fldNames.get(80).setText("@");
 
 
 
 
 
-            System.out.println("==================not done================");
+
+*/
+
+
 
         });
 
@@ -416,7 +467,7 @@ public class Parent extends JFrame {
                 generateSudoku = new GenerateSudoku(this,false);
                 generateSudoku.setUndecorated(true);
                 generateSudoku.pack();
-                generateSudoku.setLocation(this.getLocation().x+generateSudoku.getWidth()/4, this.getLocation().y + generateSudoku.getHeight()+31);
+                generateSudoku.setLocation(this.getLocation().x+generateSudoku.getWidth()/4, this.getLocation().y + generateSudoku.getHeight()-29);
                 generateSudoku.setVisible(true);
 
             } while(generateSudoku.isRetry());
@@ -544,7 +595,7 @@ public class Parent extends JFrame {
 
                         if(!appData.isMuteSounds()) { Sounds.wheelRotate(); }
 
-                        ArrayList<Integer> availableNumbers = getAvailableNumbers(sudokuData.getFocusPos(), true);
+                        ArrayList<Integer> availableNumbers = getAvailableNumbers(sudokuData.getFocusPos());
 
                         int focusPosRow = sudokuData.getFocusPos() / 9;
                         int focusPosCol = sudokuData.getFocusPos() % 9;
@@ -680,9 +731,17 @@ public class Parent extends JFrame {
                     super.focusGained(e);
 
                     paletteFlag=false;
-                    numberHelperFlag=true;
 
+                    if(     !createMode
+                            && !sudokuData.isMarkingNumbers()
+                            && numberHelperFlag
+                            && timerIsStarted
+                            && sudokuData.getAssistanceLevel() == AssistanceLevel.Full
+                            && sudokuData.getProgress()<63
+                    )
+                    startFocusPosHelper(tIndex);
                     sudokuData.setFocusPos(tIndex);
+
                     fldNames.get(tIndex).setCaretPosition(fldNames.get(tIndex).getDocument().getLength());
 
                     for (int index = 0; index < 81; index++) {
@@ -769,13 +828,13 @@ public class Parent extends JFrame {
     }
 
 
-    private int getRandomNumberInRange(int aMin, int aMax) {
+    private int getRandomNumberInRange(int aMax) {
 
-        if (aMin >= aMax) {
+        if (0 >= aMax) {
             throw new IllegalArgumentException("Max must be greater than Min");
         }
 
-        return (int)(Math.random() * ((aMax - aMin) + 1)) + aMin;
+        return (int) (Math.random() * ((aMax) + 1));
     }
 
     void clearBoard() {
@@ -811,7 +870,7 @@ public class Parent extends JFrame {
         startStopBtn.setEnabled(false);
         saveBtn.setEnabled(false);
         createBtn.setEnabled(true);
-
+        hintBtn.setEnabled(false);
 
         progressBar.setString("Load/Create or Set your Sudoku");
 
@@ -827,6 +886,8 @@ public class Parent extends JFrame {
 
         if(!appData.isMuteSounds()) {Sounds.clear();}
 
+        wonFlag=false;
+
     }
 
     private void showWelcomeMessage() {
@@ -841,7 +902,8 @@ public class Parent extends JFrame {
 
     private void showPalette(Component component, int aIndex){
 
-        numberPalette = new NumberPalette(this,getAvailableNumbers(aIndex,true), sudokuData.isSkipNumbers(),sudokuData.isHighlightSkippedNumbers(), aIndex);
+
+        numberPalette = new NumberPalette(this,getAvailableNumbers(aIndex), sudokuData.isSkipNumbers(),sudokuData.isHighlightSkippedNumbers(), aIndex);
 
         numberPalette.setUndecorated(true);
         numberPalette.pack();
@@ -868,295 +930,15 @@ public class Parent extends JFrame {
         java.util.Timer timer = new java.util.Timer();
         timer.schedule(new TimedTask(), 200, 10);
 
-
-    }
-
-    private void onHintFire() {
-
-
-
-//       /*
-       CheckBoard checkBoard = new CheckBoard(this);
-
-        checkBoard.setUndecorated(true);
-        checkBoard.pack();
-        checkBoard.setLocation(this.getLocation().x+ checkBoard.getWidth()/4, this.getLocation().y + checkBoard.getHeight()+11);
-        checkBoard.setVisible(true);
-//*/
-/*
-
-      for(int i=1;i<=9;i++)
-        System.out.println("is absent: "+i+" "+isAbsent(sudokuData.getFocusPos()/9,sudokuData.getFocusPos()%9,i));
-
-*/
-
-//        sortWeights();
-
-
-/*
-
-        ArrayList<Integer> numberList = new ArrayList<>();
-
-       */
-/* for(int myIndex=80;myIndex<81;myIndex++)*//*
- {
-
-           int myIndex=sudokuData.getFocusPos();
-
-            int aXcross = myIndex / 9;
-            int aYcross = myIndex % 9;
-
-            if(sudokuData.getCell(aXcross,aYcross)==0) {
-
-                int smallRow = aXcross - aXcross % 3;
-                int smallCol = aYcross - aYcross % 3;
-
-
-                for (int number = 1; number <= 9; number++) {
-
-                    searcher:
-                    {
-
-                        //square check
-                        for (int row = smallRow; row < smallRow + 3; row++)
-                            for (int col = smallCol; col < smallCol + 3; col++)
-
-                                if (sudokuData.getCell(row,col) == number) break searcher;
-
-                        //cross check
-                        for (int step = 0; step < 9; step++) {
-
-                            if (sudokuData.getCell(aXcross,step) == number) break searcher;
-                            if (sudokuData.getCell(step,aYcross) == number) break searcher;
-
-                        }
-
-                        numberList.add(number);
-
-                    }
-
-                }
-
-            }
-
-        }
-
-
-        System.out.println("numbers: "+numberList);
-*/
-
-
-
-        //==========================================================
-
-
-/*
-
-        int[][] temp = new int[][] {
-
-                { 0, 2, 3,   4, 0, 6,   7, 8, 0 },
-                { 4, 0, 6,   7, 8, 9,   1, 0, 3 },
-                { 7, 8, 0,   1, 2, 3,   0, 5, 6 },
-
-                { 2, 1, 4,   0, 6, 0,   8, 9, 7 },
-                { 0, 6, 5,   8, 0, 7,   2, 1, 0 },
-                { 8, 9, 7,   0, 1, 0,   3, 6, 5 },
-
-                { 5, 3, 0,   6, 4, 2,   0, 7, 8 },
-                { 6, 0, 2,   9, 7, 8,   5, 0, 1 },
-                { 0, 7, 8,   5, 0, 1,   6, 4, 0 }
-        };
-
-
-
-        for(int i =0;i<81;i++) {
-            if(temp[i/9][i%9]!=0) {
-            fldNames.get(i).setText(String.valueOf(temp[i/9][i%9]));
-            updateCell(i);
-            }
-        }
-
-
-*/
-
-        //startStopBtn.setEnabled(true);
-
-
-/*
-
-        System.out.println(Arrays.toString(getMisses(false)));
-        System.out.println("duplicates: "+ fullCheck(sudokuData.getCells()));
-*/
-
-
-        //===========================================================
+        if (!appData.isMuteSounds()) { Sounds.lock(); }
 
     }
 
 
-    private void sortWeights(){
-
-//        int[] array = new int[81];
-/*
-        class byValue implements Comparator<Map.Entry<Integer,Integer>> {
-            public int compare(Map.Entry<Integer, Integer> e1, Map.Entry<Integer, Integer> e2) {
-                return e2.getValue().compareTo(e1.getValue());
-            }
-        }*/
-
-//        byValue cmp = new byValue();
-
-
- /*       int[] indexes = new int[81];
-
-        for(int index=0;index<81;index++) {int row = index/9; int col = index%9;
-
-            int counter=0;
-
-
-            for(int i=1;i<=9;i++) if(isAbsent(row,col,i)) counter++;
-
-            if(sudokuData.getCell(row,col)==0) indexes[index]=counter;
-
-            else indexes[index]=0;
-        }
-
-
-        for(int i=0;i<81;i++)
-            System.out.println("index "+i+" "+indexes[i]+" ");
-
-        ArrayList al = new ArrayList();
-*/
-
-
-
-
-
-
-
-/*
-
-        class Pair implements Comparable<Pair> {
-            private final int index;
-            public final int value;
-
-            private Pair(int index, int value) {
-                this.index = index;
-                this.value = value;
-            }
-
-            @Override
-            public int compareTo(Pair other) {
-                return Integer.compare(this.value, other.value);
-            }
-        }
-
-*/
-
-
-
-
-
-/*
-
-        Pair[] pairArray = new Pair[81];
-
-        for(int index=0;index<81;index++) {int row = index/9; int col = index%9;
-
-            int counter=0;
-
-            for(int i=1;i<=9;i++) if(isAbsent(row,col,i)) counter++;
-
-            if(sudokuData.getCell(row,col)==0)
-            pairArray[index]= new Pair(index, counter);
-            else pairArray[index]=new Pair(index,0);
-
-        }
-
-        Arrays.sort(pairArray);
-
-        for(int i=0;i<81;i++)
-        System.out.println("PA index: "+pairArray[i].index+" PA value: "+pairArray[i].value);
-
-        int[] fakingSortedIndex = new int[81];
-
-
-        for(int i=0;i<81;i++) fakingSortedIndex[i]=pairArray[i].index;
-
-
-        System.out.println("faking sorted: "+Arrays.toString(fakingSortedIndex));
-
-
-*/
-
-
-
-
-
-
-
-      /*  class ValueComparator implements Comparator<Integer> {
-            Map<Integer, Integer> base;
-
-            public ValueComparator(Map<Integer, Integer> base) {
-                this.base = base;
-            }
-
-
-            public int compare(Integer a,Integer b) {
-                if (base.get(a) >= base.get(b)) {
-                    return 1;
-                } else {
-                    return -1;
-                } // returning 0 would merge keys
-            }
-        }
-
-
-
-        ValueComparator bvc = new ValueComparator(tm);
-
-        System.out.println("is tm: "+tm);
-
-        TreeMap<Integer, Integer> sorted_map = new TreeMap<>(bvc);
-
-        sorted_map.putAll(tm);
-        System.out.println("is tm: "+sorted_map);
-        */
-
-
-
-
-    }
-
-
-    private boolean isAbsent(int aRow, int aCol, int aNumber) {
-
-        int smallRow = aRow - aRow%3;
-        int smallCol = aCol - aCol%3;
-
-        for(int sRow = smallRow;sRow<smallRow+3;sRow++)
-            for(int sCol = smallCol;sCol<smallCol+3;sCol++)
-
-                if (sudokuData.getCell(sRow,sCol) == aNumber) return false;
-
-
-
-        for(int step = 0; step<9;step++) {
-
-            if (sudokuData.getCell(step,aCol) == aNumber) return false;
-            if (sudokuData.getCell(aRow,step) == aNumber) return false;
-
-        }
-
-        return true;
-
-    }
-
-    boolean fullCheck(int[][] aCells){
+    public static boolean fullCheck(int[][] aCells){
 
         boolean duplicate = false;
-
+        outer:
         for(int step=0;step<9;step++) {
             for (int first = 0; first < 9; first++)
                 for (int second = 0; second < 9; second++) {
@@ -1164,13 +946,13 @@ public class Parent extends JFrame {
                     //row
                     if (first != second && aCells[first][step] == aCells[second][step] && aCells[first][step]!=0) {
                         duplicate = true;
-                        break;
+                        break outer;
                     }
 
                     //col
                     if (first != second && aCells[step][first] == aCells[step][second]&& aCells[step][second]!=0) {
                         duplicate = true;
-                        break;
+                        break outer;
                     }
 
 
@@ -1278,7 +1060,7 @@ public class Parent extends JFrame {
 
         for (int row = 0; row < 9; row++) for (int col = 0; col < 9; col++) { int index = row * 9 + col;
 
-            if (sudokuData.getCell(row, col) == 0) { listOfAvailableNumbers = getAvailableNumbers(index, true);
+            if (sudokuData.getCell(row, col) == 0) { listOfAvailableNumbers = getAvailableNumbers(index);
 
                 if (listOfAvailableNumbers.size() == 1) {
                     if(aWriteSingles) {
@@ -1305,6 +1087,10 @@ public class Parent extends JFrame {
 
             }
 
+            if(aWriteSingles && singles!=0) {
+                progressBarText("Wrote Singles",3000,false);
+            }
+
         }
 
 
@@ -1312,17 +1098,17 @@ public class Parent extends JFrame {
 
         if(singles!=0) {
 
-            if(singles!=1) focusTo = listOfSinglesIndexes.get(getRandomNumberInRange(0,listOfSinglesIndexes.size()-1));
+            if(singles!=1) focusTo = listOfSinglesIndexes.get(getRandomNumberInRange(listOfSinglesIndexes.size()-1));
                     else focusTo = listOfSinglesIndexes.get(0);
 
         } else if(doubles!=0) {
 
-            if(doubles!=1) focusTo = listOfDoublesIndexes.get(getRandomNumberInRange(0,listOfDoublesIndexes.size()-1));
+            if(doubles!=1) focusTo = listOfDoublesIndexes.get(getRandomNumberInRange(listOfDoublesIndexes.size()-1));
                     else focusTo = listOfDoublesIndexes.get(0);
 
         } else if(triples!=0) {
 
-            if(triples!=1)  focusTo = listOfTriplesIndexes.get(getRandomNumberInRange(0,listOfTriplesIndexes.size()-1));
+            if(triples!=1)  focusTo = listOfTriplesIndexes.get(getRandomNumberInRange(listOfTriplesIndexes.size()-1));
                     else focusTo = listOfTriplesIndexes.get(0);
         }
 
@@ -1331,51 +1117,10 @@ public class Parent extends JFrame {
 
     }
 
-    private void startFocusPosHelper() {
-
-        class FocusHelper extends TimerTask{
-
-           private int focusTo=-1;
-
-            public void run() {
-
-                if(!createMode && timerIsStarted && numberHelperFlag && sudokuData.getAssistanceLevel()!= AssistanceLevel.Low) {
-
-                    if(focusTo==sudokuData.getFocusPos()) {
-
-                        if(getCellFreeWeight(false)[3]!=-1) {
-
-                            int pos = getCellFreeWeight(false)[3];
-
-                            if(pos!=sudokuData.getFocusPos()) {
-
-                                fldNames.get(pos).grabFocus();
-
-                                sudokuData.setFocusPos(pos);
-
-                                appData.decreaseTokens(1);
-
-                                if (fio.onExit()) progressBarText("Error", 2500, false);
-
-                                hintBtn.setToolTipText("Available Hint Tokens: " + appData.getGameTokens());
-
-                                progressBarText("Target Cell Moved, Hint Token Deducted", 4000, false);
-
-                            }
-
-                            if (!appData.isMuteSounds()) {Sounds.helper(); }
-
-                        }
-
-                    } else{focusTo=sudokuData.getFocusPos();}
-
-                }
-
-            }
-        }
+    private void startFocusPosHelper(int aPos) {
 
         java.util.Timer timer = new java.util.Timer();
-        timer.schedule(new FocusHelper(), 1000, 30000);
+        timer.schedule(new FocusHelper(aPos), 120000);
 
     }
 
@@ -1454,7 +1199,7 @@ public class Parent extends JFrame {
         appData.addStartedGames();
         appData.decreaseTokens(25);
 
-        fio.saveFile("Unique",fio.saveFilenameExtension,this.getSudokuData());
+        fio.saveFile("Months",fio.saveFilenameExtension,this.getSudokuData());
 
         if(fio.onExit()) progressBarText("Error!",3000,false);
 
@@ -1535,28 +1280,28 @@ public class Parent extends JFrame {
 
         if(!appData.isMuteSounds()) {Sounds.commence();}
 
+        wonFlag=false;
+
     }
 
     private boolean checkLegit(int aIndex, char aKey, boolean aAlterColor){
 
         boolean result = false;
 
-        //square check
-        int aY = Integer.parseInt(fldNames.get(aIndex).getName())/9;
-        int aX = Integer.parseInt(fldNames.get(aIndex).getName())%9;
+        int row = aIndex/9;
+        int col = aIndex%9;
 
-        int yStart = max(0,aY-1); int yEnd = min(8,aY+1);
-        int xStart = max(0,aX-1); int xEnd = min(8,aX+1);
+        int smallRow = row - row % 3;
+        int smallCol = col - col % 3;
 
-        for(int row=yStart;row<=yEnd;row++)
-            for(int col=xStart;col<=xEnd;col++){
+        for (int sRow = smallRow; sRow < smallRow + 3; sRow++)
+            for (int sCol = smallCol; sCol < smallCol + 3; sCol++){
 
-                //check square except self
-                if ((row*9+col)!=aIndex && Integer.toString(sudokuData.getCells()[row][col]).equals(Character.toString(aKey)) ) {
+                if ((sRow*9+sCol)!=aIndex && Integer.toString(sudokuData.getCells()[sRow][sCol]).equals(Character.toString(aKey)) ) {
 
-                    if(aAlterColor) alterFieldColor(row*9+col,appData.getHighlightNumberColor(),200,"foreground");
+                    if(aAlterColor) alterFieldColor(sRow*9+sCol,appData.getHighlightNumberColor(),200,"foreground");
 
-                    if(!appData.isMuteSounds() && aAlterColor && sudokuData.getCells()[row][col]!=0) {Sounds.wrongNumber();}
+                    if(!appData.isMuteSounds() && aAlterColor && sudokuData.getCells()[sRow][sCol]!=0) {Sounds.wrongNumber();}
 
                     result = true;
 
@@ -1565,29 +1310,27 @@ public class Parent extends JFrame {
             }
 
 
-        //cross check
-
-        int aYcross = aIndex/9;
-        int aXcross = aIndex%9;
+        int rowCross = aIndex/9;
+        int colCross = aIndex%9;
 
         for(int step=0;step<9;step++){
 
 
-            if ((aYcross*9+step)!=aIndex && Integer.toString(sudokuData.getCells()[aYcross][step]).equals(Character.toString(aKey)) ) {
+            if ((rowCross*9+step)!=aIndex && Integer.toString(sudokuData.getCells()[rowCross][step]).equals(Character.toString(aKey)) ) {
 
-                if(aAlterColor) alterFieldColor(aYcross*9+step,appData.getHighlightNumberColor(),200,"foreground");
+                if(aAlterColor) alterFieldColor(rowCross*9+step,appData.getHighlightNumberColor(),200,"foreground");
 
-                if(!appData.isMuteSounds() && aAlterColor && sudokuData.getCell(aYcross,step)!=0) {Sounds.wrongNumber();}
+                if(!appData.isMuteSounds() && aAlterColor && sudokuData.getCell(rowCross,step)!=0) {Sounds.wrongNumber();}
 
                 result = true;
 
             }
 
-            if ((step*9+aXcross)!=aIndex && Integer.toString(sudokuData.getCells()[step][aXcross]).equals(Character.toString(aKey)) ) {
+            if ((step*9+colCross)!=aIndex && Integer.toString(sudokuData.getCells()[step][colCross]).equals(Character.toString(aKey)) ) {
 
-                if(aAlterColor) alterFieldColor(step*9+aXcross,appData.getHighlightNumberColor(),200,"foreground");
+                if(aAlterColor) alterFieldColor(step*9+colCross,appData.getHighlightNumberColor(),200,"foreground");
 
-                if(!appData.isMuteSounds() && aAlterColor && sudokuData.getCell(step,aXcross)!=0) {Sounds.wrongNumber();}
+                if(!appData.isMuteSounds() && aAlterColor && sudokuData.getCell(step,colCross)!=0) {Sounds.wrongNumber();}
 
                 result = true;
 
@@ -1678,38 +1421,34 @@ public class Parent extends JFrame {
 
     }
 
-    private ArrayList<Integer> getAvailableNumbers(int aIndex,boolean aCheckSelf) {
+    private ArrayList<Integer> getAvailableNumbers(int aIndex) {
 
         ArrayList<Integer> numberList = new ArrayList<>();
 
-        //get center of square
-        int aY = Integer.parseInt(fldNames.get(aIndex).getName()) / 9;
-        int aX = Integer.parseInt(fldNames.get(aIndex).getName()) % 9;
-
-        //clamp boundaries
-        int yStart = max(0, aY - 1); int yEnd = min(8, aY + 1);
-        int xStart = max(0, aX - 1); int xEnd = min(8, aX + 1);
-
         //get row and column to check
-        int aYcross = aIndex / 9;
-        int aXcross = aIndex % 9;
+        int row = aIndex / 9;
+        int col = aIndex % 9;
+
+        int smallRow = row - row % 3;
+        int smallCol = col - col % 3;
 
         //add to array only available numbers from square and cross
         for (int number = 1; number <= 9; number++) {
             searcher:
             {
+                //square
+                for (int sRow = smallRow; sRow < smallRow + 3; sRow++)
+                    for (int sCol = smallCol; sCol < smallCol + 3; sCol++){
 
-                //square check
-                for (int row = yStart; row <= yEnd; row++)
-                    for (int col = xStart; col <= xEnd; col++)
+                        if (sudokuData.getCells()[sRow][sCol] == number &&  ((sRow * 9 + sCol) != aIndex)) break searcher;
 
-                        if (sudokuData.getCells()[row][col] == number &&  ((row*9+col)!=aIndex||!aCheckSelf)) break searcher;
+                    }
 
                 //cross check
                 for (int step = 0; step < 9; step++) {
 
-                    if ( sudokuData.getCells()[aYcross][step] == number && ((aYcross*9+step)!=aIndex||!aCheckSelf))  break searcher;
-                    if ( sudokuData.getCells()[step][aXcross] == number && ((step*9+aXcross)!=aIndex||!aCheckSelf))  break searcher;
+                    if ( sudokuData.getCells()[row][step] == number && ((row * 9 + step) != aIndex))  break searcher;
+                    if ( sudokuData.getCells()[step][col] == number && ((step * 9 + col) != aIndex))  break searcher;
 
                 }
 
@@ -1763,6 +1502,7 @@ public class Parent extends JFrame {
         if(!sudokuData.isMarkingNumbers() && !createMode) progressBar.setValue(sudokuData.getProgress());
 
 
+
         if(sudokuData.getProgress()>13 && sudokuData.getProgress()<55) {
 
             startStopBtn.setEnabled(true);
@@ -1770,6 +1510,7 @@ public class Parent extends JFrame {
             if(!createMode) {
 
                 saveBtn.setEnabled(true);
+                hintBtn.setEnabled(true);
 
             }
             else{
@@ -1787,6 +1528,7 @@ public class Parent extends JFrame {
 
             if(createMode) {
 
+                hintBtn.setEnabled(false);
                 startStopBtn.setEnabled(false);
 
                 if (sudokuData.getProgress()>54){
@@ -1855,11 +1597,26 @@ public class Parent extends JFrame {
         hintBtn.setToolTipText("Available Hint Tokens: "+appData.getGameTokens());
 
         //Win State
-        if(!sudokuData.isMarkingNumbers() && !createMode && sudokuData.getProgress()==81) {
+        if(!sudokuData.isMarkingNumbers() && !createMode && sudokuData.getProgress()==81 && !wonFlag) {
 
             if(!fullCheck(sudokuData.getCells())) {
 
-                if( !sudokuData.isWon() ) gameWon();
+                if( !sudokuData.isWon()) { wonFlag=true;
+
+                    class BeginWon extends TimerTask{
+
+                        public void run() {
+
+                            gameWon();
+
+                        }
+
+                    }
+
+                    java.util.Timer timerDrain = new java.util.Timer();
+                    timerDrain.schedule(new BeginWon(), 1000);
+
+                }
 
             }
 
@@ -1894,54 +1651,18 @@ public class Parent extends JFrame {
 
         }
 
-        class DrainNumbers extends TimerTask{
-
-            public void run() {
-
-                System.arraycopy(drainedNumbers, 0, drainedNumbers, 1, 80);
-                drainedNumbers[0]=0;
-
-                for(int innerIndex=0;innerIndex<81;innerIndex++){
-
-                if(drainedNumbers[innerIndex]!=0)
-                fldNames.get(appData.getDrainSpiral(innerIndex)).setText(String.valueOf(drainedNumbers[innerIndex]));
-
-                }
-
-                fldNames.get(appData.getDrainSpiral(drainIndex)).setBackground(appData.getDefaultBackgroundColor());
-                fldNames.get(appData.getDrainSpiral(drainIndex)).setText("");
-
-
-                if(drainIndex<80) drainIndex++;
-                else {
-                    drainIndex=0;
-                    cancel();
-                }
-
-
-            }
-
-        }
-
         if(!appData.isMuteSounds()) {Sounds.wonGame();}
 
         progressBarText("Congratulations", 5000, false);
 
+        int intermediateCalc = calcTokens();
         java.util.Timer timerDrain = new java.util.Timer();
-        timerDrain.schedule(new DrainNumbers(), 200, 40);
+        timerDrain.schedule(new DrainNumbers(this,intermediateCalc), 200, 40);
 
-        int intermediateCalc=calcTokens();
 
         appData.addHintToken(intermediateCalc);
+        hintBtn.setToolTipText("Available Hint Tokens: " + appData.getGameTokens());
         appData.addWonGame();
-
-        CongratulationDialog congratulationDialog = new CongratulationDialog(this,intermediateCalc);
-
-        congratulationDialog.setUndecorated(true);
-        congratulationDialog.pack();
-        congratulationDialog.setLocation(this.getLocation().x+ congratulationDialog.getWidth()/4, this.getLocation().y+congratulationDialog.getWidth()/2-4);
-        congratulationDialog.setVisible(true);
-
 
     }
 
@@ -1950,37 +1671,34 @@ public class Parent extends JFrame {
         int intermediateCalc=0;
 
         if(sudokuData.getDifficulty()==Difficulty.Evil) {
-            intermediateCalc=20;
-                 if(sudokuData.getSecondCounter()< 601)intermediateCalc+=25;  //45
-            else if(sudokuData.getSecondCounter()<1201)intermediateCalc+=20;  //40
-            else if(sudokuData.getSecondCounter()<1801)intermediateCalc+=15;  //35
-            else intermediateCalc+=10;                                        //30
-        }
-
-        if(sudokuData.getDifficulty()==Difficulty.Hard) {
             intermediateCalc=15;
                  if(sudokuData.getSecondCounter()< 601)intermediateCalc+=20;  //35
             else if(sudokuData.getSecondCounter()<1201)intermediateCalc+=15;  //30
             else if(sudokuData.getSecondCounter()<1801)intermediateCalc+=10;  //25
-            else intermediateCalc+=5;                                         //20
+
         }
 
-        if(sudokuData.getDifficulty()==Difficulty.Fair) {
+        if(sudokuData.getDifficulty()==Difficulty.Hard) {
             intermediateCalc=10;
                  if(sudokuData.getSecondCounter()< 601)intermediateCalc+=15;  //25
             else if(sudokuData.getSecondCounter()<1201)intermediateCalc+=10;  //20
-            else if(sudokuData.getSecondCounter()<1801)intermediateCalc+= 5;  //15
+
         }
 
-        if(sudokuData.getDifficulty()==Difficulty.Easy) {
+        if(sudokuData.getDifficulty()==Difficulty.Fair) {
             intermediateCalc=5;
-                 if(sudokuData.getSecondCounter()<601)intermediateCalc+= 5;}  //10
+                 if(sudokuData.getSecondCounter()< 601)intermediateCalc+=10;  //15
+        }
 
 
+        if(sudokuData.getAssistanceLevel()==AssistanceLevel.Low)    {
+            intermediateCalc+= 13; if(sudokuData.getDifficulty()==Difficulty.Easy) intermediateCalc-=5;}
+        if(sudokuData.getAssistanceLevel()==AssistanceLevel.Medium) {
+            intermediateCalc+=  8; if(sudokuData.getDifficulty()==Difficulty.Easy) intermediateCalc-=3;}
+        if(sudokuData.getAssistanceLevel()==AssistanceLevel.Full)   {
+            intermediateCalc+=  3; }
 
-        if(sudokuData.getAssistanceLevel()==AssistanceLevel.Low)    intermediateCalc+= 18;
-        if(sudokuData.getAssistanceLevel()==AssistanceLevel.Medium) intermediateCalc+= 13;
-        if(sudokuData.getAssistanceLevel()==AssistanceLevel.Full)   intermediateCalc+=  3;
+        if(!sudokuData.isGenerated()) intermediateCalc-=10; else intermediateCalc-=5;
 
         return intermediateCalc;
 
@@ -2095,8 +1813,8 @@ public class Parent extends JFrame {
 
         if(sudokuData.isStruckFirstDiagonal() && !createMode) {
 
-            progressBarText("Bonus: Diagonal Struck - Earned 2 Hint Tokens",4000,false);
-            appData.addHintToken(2);
+            progressBarText("Bonus: Diagonal Struck - Earned 3 Hint Tokens!",4000,false);
+            appData.addHintToken(3);
             timerFirstDiagonal.schedule(new TimedFirstDiagonalTask(), 50, 150);
 
             if(!appData.isMuteSounds()) {Sounds.earned();}
@@ -2138,8 +1856,8 @@ public class Parent extends JFrame {
 
         if(sudokuData.isStruckSecondDiagonal() && !createMode) {
 
-            progressBarText("Bonus: Diagonal Struck - Earned 2 Hint Tokens",4000,false);
-            appData.addHintToken(2);
+            progressBarText("Bonus: Diagonal Struck - Earned 3 Hint Tokens!",4000,false);
+            appData.addHintToken(3);
             timerSecondDiagonal.schedule(new TimedSecondDiagonalTask(), 50, 150);
 
             if(!appData.isMuteSounds()) {Sounds.earned();}
@@ -2409,21 +2127,21 @@ public class Parent extends JFrame {
 
                 if(appData.isSaveOnExit()) {
 
-                    SudokuData loadedSudokuData=(SudokuData) fio.loadFile("Unique",fio.saveFilenameExtension);
+                    SudokuData loadedSudokuData=(SudokuData) fio.loadFile("Months",fio.saveFilenameExtension);
 
                     if(loadedSudokuData!=null){
 
                         sudokuData=loadedSudokuData;
                         onLoadGame();
-                        progressBarText("Loaded Unique Save File",2500,false);
+                        progressBarText("Loaded Months Save File",2500,false);
 
                     }
-                    else progressBarText("Missing Unique Save File",2500,true);
+                    else progressBarText("Missing Months Save File",2500,true);
 
                 }
 
                 if (appData.isShowWelcomeMsg()) showWelcomeMessage();
-
+                setAlwaysOnTop (appData.isAlwaysOnTop());
                 initTimer.cancel();
                 initTimer.purge();
             }
@@ -2434,8 +2152,6 @@ public class Parent extends JFrame {
 
 
         timerLabel.setVisible(appData.isShowTimer());
-
-        startFocusPosHelper();
 
 
         try {
@@ -2470,9 +2186,9 @@ public class Parent extends JFrame {
 
         }
 
-        if(appData.isSaveOnExit() && !createMode && sudokuData.getProgress()<55) {
+        if(!createMode && sudokuData.getProgress()<55) {
 
-            fio.saveFile("Unique",fio.saveFilenameExtension,this.sudokuData);
+            fio.saveFile("Months",fio.saveFilenameExtension,this.sudokuData);
 
         }
 
@@ -2503,6 +2219,7 @@ public class Parent extends JFrame {
             //load numbers
             if (sudokuData.getCell(row, col) != 0) {
                     fldNames.get(index).setText(Integer.toString(sudokuData.getCell(row, col)));
+                    updateCell(index);
                     progressBar.setValue(sudokuData.getProgress());
             }
 
@@ -2515,6 +2232,103 @@ public class Parent extends JFrame {
 
         }
 
+    }
+
+    private class DrainNumbers extends TimerTask{
+
+        private Parent parent;
+        private int tokens;
+
+        private DrainNumbers(Parent aParent, int aIntermediateCalc){
+
+            parent=aParent;
+            tokens=aIntermediateCalc;
+
+        }
+
+
+        public void run() {
+
+            System.arraycopy(drainedNumbers, 0, drainedNumbers, 1, 80);
+            drainedNumbers[0]=0;
+
+            for(int innerIndex=0;innerIndex<81;innerIndex++){
+
+                if(drainedNumbers[innerIndex]!=0)
+                    fldNames.get(appData.getDrainSpiral(innerIndex)).setText(String.valueOf(drainedNumbers[innerIndex]));
+
+            }
+
+            fldNames.get(appData.getDrainSpiral(drainIndex)).setBackground(appData.getDefaultBackgroundColor());
+            fldNames.get(appData.getDrainSpiral(drainIndex)).setText("");
+
+
+            if(drainIndex<80) drainIndex++;
+            else {
+                drainIndex=0;
+
+                CongratulationDialog congratulationDialog = new CongratulationDialog(parent,tokens);
+
+                congratulationDialog.setUndecorated(true);
+                congratulationDialog.pack();
+                congratulationDialog.setLocation(parent.getLocation().x+ congratulationDialog.getWidth()/4, parent.getLocation().y+congratulationDialog.getWidth()/2-4);
+                congratulationDialog.setVisible(true);
+
+                cancel();
+            }
+
+
+        }
+
+    }
+
+    private class FocusHelper extends TimerTask{
+
+        private int focusTo;
+
+        FocusHelper(int aPos){
+            focusTo=aPos;
+        }
+
+        public void run() {
+
+            if(!timerIsStarted && !numberHelperFlag) {cancel();}
+
+            if(     !createMode
+                    && !sudokuData.isMarkingNumbers()
+                    && timerIsStarted
+                    && numberHelperFlag
+                    && sudokuData.getAssistanceLevel() == AssistanceLevel.Full)
+
+            if(focusTo==sudokuData.getFocusPos()) {
+
+                if(getCellFreeWeight(false)[3]!=-1) {
+
+                    int pos = getCellFreeWeight(false)[3];
+
+                    if(pos!=sudokuData.getFocusPos()) {
+
+                        fldNames.get(pos).grabFocus();
+
+                        sudokuData.setFocusPos(pos);
+
+                        appData.decreaseTokens(1);
+
+                        if (fio.onExit()) progressBarText("Error", 2500, false);
+
+                        hintBtn.setToolTipText("Available Hint Tokens: " + appData.getGameTokens());
+
+                        progressBarText("Target Cell Moved, Hint Token Deducted", 4000, false);
+
+                    }
+
+                    if (!appData.isMuteSounds()) { Sounds.helper(); }
+                    alterFieldColor(pos,new Color(200, 255, 200),2000,"background");
+                }
+
+            }
+
+        }
     }
 
     private static class ProgressPainter implements Painter {
@@ -2544,7 +2358,13 @@ public class Parent extends JFrame {
 
     void writeField(int aIndex, String aNumber){
         fldNames.get(aIndex).setText(aNumber);
-//        updateCell(aIndex);
+        updateCell(aIndex);
+    }
+
+    JTextField getCentralField(){
+
+        return textField40;
+
     }
 
     private void createUIComponents() {

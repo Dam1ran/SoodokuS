@@ -26,6 +26,8 @@ public class ResetDialog extends JDialog {
 
     ResetDialog(Parent aParent) {
 
+        setAlwaysOnTop(true);
+
         parent=aParent;
 
         setContentPane(contentPane);

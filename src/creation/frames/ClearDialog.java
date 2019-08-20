@@ -21,6 +21,8 @@ public class ClearDialog extends JDialog {
 
     ClearDialog(Parent aParent) {
 
+        setAlwaysOnTop(true);
+
         parent=aParent;
 
         setContentPane(contentPane);

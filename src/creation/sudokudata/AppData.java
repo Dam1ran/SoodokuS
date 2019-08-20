@@ -13,9 +13,15 @@ public class AppData implements Serializable {
     private int startedGames;
 
 
+    private boolean muteSounds;
     public boolean isMuteSounds() { return muteSounds;  }
     public void setMuteSounds(boolean muteSounds) { this.muteSounds = muteSounds;  }
-    private boolean muteSounds;
+
+
+    private boolean alwaysOnTop;
+    public boolean isAlwaysOnTop() { return alwaysOnTop;  }
+    public void setAlwaysOnTop(boolean alwaysOnTop) { this.alwaysOnTop = alwaysOnTop; }
+
 
     public boolean isSoundIsDisabled() { return soundIsDisabled; }
     public void setSoundIsDisabled(boolean soundIsDisabled) { this.soundIsDisabled = soundIsDisabled; }
@@ -159,6 +165,7 @@ public class AppData implements Serializable {
         this.showWelcomeMsg=true;
         this.saveOnExit=false;
         this.showTimer=true;
+        this.alwaysOnTop=true;
 
    }
 

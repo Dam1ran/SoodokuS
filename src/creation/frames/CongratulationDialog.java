@@ -21,6 +21,8 @@ public class CongratulationDialog extends JDialog {
 
     CongratulationDialog(Parent aParent, int aWonTokens) {
 
+        setAlwaysOnTop(true);
+
         parent=aParent;
 
         setContentPane(contentPane);
@@ -48,7 +50,7 @@ public class CongratulationDialog extends JDialog {
         buttonOK.addAncestorListener(new RequestFocusListener());
 
 
-        earnedLbl.setText("Earned "+aWonTokens+" Hints!");
+        earnedLbl.setText("Earned "+(aWonTokens+27)+" Hints!");
 
         if(!parent.getSudokuData().getName().equals("Default")) {
 
@@ -70,7 +72,6 @@ public class CongratulationDialog extends JDialog {
     private void onClose() {
 
         if(!parent.getAppData().isMuteSounds()){ Sounds.notifySound(); }
-
 
         parent.setPauseFlag();
         parent.clearBoard();

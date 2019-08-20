@@ -11,6 +11,8 @@ public class InitWindow extends JDialog{
 
     InitWindow(){
 
+        setAlwaysOnTop(true);
+
         setContentPane(contentPane);
         setModal(false);
         textLbl.setForeground(new Color(220,220,255));

@@ -29,6 +29,8 @@ public class OptionsDialog extends JDialog {
 
     OptionsDialog(Parent aParent) {
 
+        setAlwaysOnTop(true);
+
         parent = aParent;
 
         setContentPane(contentPane);
@@ -77,7 +79,7 @@ public class OptionsDialog extends JDialog {
 
             discardBtn.setEnabled(false);
             approveBtn.setEnabled(false);
-            if (!parent.isCreateMode()) markBtn.setEnabled(true);
+            if (parent.isCreateMode()) markBtn.setEnabled(true);
 
         }
 
@@ -152,7 +154,7 @@ public class OptionsDialog extends JDialog {
         parent.setVisible(false);
         setVisible(false);
 
-        ByeDialog byeDialog = new ByeDialog("pulabelita, See you soon!",parent);
+        ByeDialog byeDialog = new ByeDialog("Damiran, See you soon!",parent);
         byeDialog.setUndecorated(true);
         byeDialog.pack();
         byeDialog.setLocation(parent.getLocation().x, parent.getLocation().y+200);

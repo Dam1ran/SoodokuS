@@ -4,6 +4,7 @@ package creation.frames;
 import creation.dataworks.StopWatch;
 import creation.dataworks.SudokuGenerator;
 import creation.filehandlers.Sounds;
+import creation.sudokudata.AssistanceLevel;
 import creation.sudokudata.Difficulty;
 
 import javax.swing.*;
@@ -25,6 +26,7 @@ public class GenerateSudoku extends JDialog{
     private JRadioButton fairRadioBtn;
     private JRadioButton easyRadioBtn;
     private JLabel operationLbl;
+    private JLabel potentialLbl;
 
     private SudokuGenerator SG;
     private StopWatch stopWatch = new StopWatch();
@@ -38,6 +40,8 @@ public class GenerateSudoku extends JDialog{
     private Parent parent;
 
     GenerateSudoku(Parent aParent, boolean aGrabBoard){
+
+        setAlwaysOnTop(true);
 
         this.parent=aParent;
 
@@ -67,6 +71,7 @@ public class GenerateSudoku extends JDialog{
 
         buttonBack.addActionListener(e -> onCancel());
 
+        parent.getSudokuData().setAssistanceLevel(AssistanceLevel.Full);
 
         ActionListener listener = e -> {
 
@@ -74,23 +79,28 @@ public class GenerateSudoku extends JDialog{
             if (evilRadioBtn.isSelected()) {
                 difficultyLbl.setText("Clues: [14-18] - Evil");
                 parent.getAppData().setSelectedRadioGenDifficultyBtn(0);
+                parent.getSudokuData().setDifficulty(Difficulty.Evil);
             }
 
             if (hardRadioBtn.isSelected()) {
                 difficultyLbl.setText("Clues: [19-26] - Hard");
                 parent.getAppData().setSelectedRadioGenDifficultyBtn(1);
+                parent.getSudokuData().setDifficulty(Difficulty.Hard);
             }
 
             if (fairRadioBtn.isSelected()) {
                 difficultyLbl.setText("Clues: [27-36] - Fair");
                 parent.getAppData().setSelectedRadioGenDifficultyBtn(2);
+                parent.getSudokuData().setDifficulty(Difficulty.Fair);
             }
 
             if (easyRadioBtn.isSelected()) {
                 difficultyLbl.setText("Clues: [37-54] - Easy");
                 parent.getAppData().setSelectedRadioGenDifficultyBtn(3);
+                parent.getSudokuData().setDifficulty(Difficulty.Easy);
             }
 
+            potentialLbl.setText("      Potential Win Hint Tokens: "+(parent.calcTokens()+27));
 
         };
         evilRadioBtn.addActionListener(listener);
@@ -98,7 +108,13 @@ public class GenerateSudoku extends JDialog{
         fairRadioBtn.addActionListener(listener);
         easyRadioBtn.addActionListener(listener);
 
+        buttons();
 
+        potentialLbl.setText("      Potential Win Hint Tokens: __");
+
+    }
+
+    private void buttons(){
 
         int selectedRadioBtn = parent.getAppData().getSelectedRadioGenDifficultyBtn();
         if(selectedRadioBtn==0)       {
@@ -110,9 +126,7 @@ public class GenerateSudoku extends JDialog{
         else if (selectedRadioBtn==3) {
             easyRadioBtn.setSelected(true);    easyRadioBtn.doClick(); difficultyLbl.setText("Clues: [37-54] - Easy"); }
 
-
     }
-
 
     private void onInit() {
 
@@ -187,7 +201,8 @@ public class GenerateSudoku extends JDialog{
 
                         buttonGO.setText("Proceed");
                         buttonGO.setEnabled(true);
-
+                        potentialLbl.setText("      Potential Win Hint Tokens: "+(parent.calcTokens()+27));
+                        buttons();
                         buttonBack.setText("Back");
                         retry=false;
 
@@ -222,7 +237,7 @@ public class GenerateSudoku extends JDialog{
 
             operationMsg="Generated "+parent.getSudokuData().getDifficulty()+" Sudoku";
 
-            if(parent.fullCheck(SG.getCells())) {operationMsg = "Sudoku is wrong";}
+            if(Parent.fullCheck(SG.getCells())) {operationMsg = "Sudoku is wrong";}
             else {
                 parent.getSudokuData().setCells(SG.getCells());
                 parent.getSudokuData().setGenerated(true);
@@ -252,6 +267,8 @@ public class GenerateSudoku extends JDialog{
         if ( hardRadioBtn.isSelected()  )  { parent.getAppData().setSelectedRadioGenDifficultyBtn(1); }
         if ( fairRadioBtn.isSelected()  )  { parent.getAppData().setSelectedRadioGenDifficultyBtn(2); }
         if ( easyRadioBtn.isSelected()  )  { parent.getAppData().setSelectedRadioGenDifficultyBtn(3); }
+
+        parent.getSudokuData().setDifficulty(Difficulty.Poor);
 
         dispose();
 

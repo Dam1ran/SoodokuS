@@ -19,7 +19,6 @@ public class SudokuData implements Serializable {
 
     public boolean isMarkingNumbers() { return markingNumbers; }
     public int[][] getCells() { return cells; }
-    public int[][] getSolvedCells() { return solvedCells;  }
     public Color[][] getNumberColors() { return numberColors;  }
     public Color[][] getNumberBackgroundColors() { return numberBackgroundColors; }
     public boolean isGenerated() { return generated;  }
@@ -53,7 +52,6 @@ public class SudokuData implements Serializable {
 
     public void setMarkingNumbers(boolean markingNumbers) { this.markingNumbers = markingNumbers;  }
     public void setCells(int[][] cells) {  this.cells = cells;  }
-    public void setSolvedCells(int[][] solvedCells) {  this.solvedCells = solvedCells;  }
     public void setGenerated(boolean generated) { this.generated = generated;  }
     public void setName(String name) {   this.name = name;  }
 
@@ -115,8 +113,6 @@ public class SudokuData implements Serializable {
 
     private boolean     struckSecondDiagonal=false;
 
-
-    private int[][]     solvedCells;
 
     private Color[][]   numberColors;
     private Color[][]   numberBackgroundColors;

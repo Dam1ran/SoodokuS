@@ -23,6 +23,7 @@ public class SettingsWindow extends JDialog {
     private JCheckBox welcomeCheckBox;
     private JCheckBox muteLbl;
     private JCheckBox timerCheckBox;
+    private JCheckBox alwaysOnTopCheckbox;
     private SpinnerNumberModel model;
     private Parent parent;
 
@@ -30,6 +31,9 @@ public class SettingsWindow extends JDialog {
 
 
     SettingsWindow(Parent aParent) {
+
+
+        setAlwaysOnTop(true);
 
         parent = aParent;
         setContentPane(contentPane);
@@ -95,7 +99,7 @@ public class SettingsWindow extends JDialog {
 
         saveOnExitCheckBox.setSelected(parent.getAppData().isSaveOnExit());
         saveOnExitCheckBox.addActionListener(e -> parent.getAppData().setSaveOnExit(((JCheckBox)e.getSource()).isSelected()));
-        saveOnExitCheckBox.setToolTipText("Will save Started SoodokuS only under 55 progress");
+        saveOnExitCheckBox.setToolTipText("Will save Started SoodokuS only under 55 progress, 9th Slot will be used");
 
         muteLbl.setEnabled(!parent.getAppData().isSoundIsDisabled());
         muteLbl.setSelected(parent.getAppData().isMuteSounds());
@@ -108,6 +112,11 @@ public class SettingsWindow extends JDialog {
             parent.timerLabel.setVisible(((JCheckBox)e.getSource()).isSelected());
         });
 
+        alwaysOnTopCheckbox.setSelected(parent.getAppData().isAlwaysOnTop());
+        alwaysOnTopCheckbox.addActionListener(e -> {
+            parent.getAppData().setAlwaysOnTop(((JCheckBox)e.getSource()).isSelected());
+            parent.setAlwaysOnTop(((JCheckBox)e.getSource()).isSelected());
+        });
 
         aboutBtn.addActionListener(e -> onAbout());
 

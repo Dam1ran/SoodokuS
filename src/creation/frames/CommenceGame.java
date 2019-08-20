@@ -21,12 +21,15 @@ public class CommenceGame extends JDialog{
     private JButton buttonBack;
     private JButton buttonGO;
     private JLabel tokensLbl;
+    private JLabel potentialLbl;
 
     private String operationMsg;
 
     private Parent parent;
 
     CommenceGame(Parent aParent){
+
+        setAlwaysOnTop(true);
 
         this.parent=aParent;
 
@@ -60,23 +63,27 @@ public class CommenceGame extends JDialog{
             if (radioHigh.isSelected()) {
                 assistLbl.setText("    Choose Assistance Level: Full");
                 parent.getAppData().setSelectedRadioBtn(-1);
+                parent.getSudokuData().setAssistanceLevel(AssistanceLevel.Full);
             }
 
             if (radioMed.isSelected()) {
                 assistLbl.setText("    Choose Assistance Level: Medium");
                 parent.getAppData().setSelectedRadioBtn(0);
+                parent.getSudokuData().setAssistanceLevel(AssistanceLevel.Medium);
             }
 
             if (radioLow.isSelected()) {
                 assistLbl.setText("    Choose Assistance Level: Low");
                 parent.getAppData().setSelectedRadioBtn(1);
+                parent.getSudokuData().setAssistanceLevel(AssistanceLevel.Low);
             }
+
+            potentialLbl.setText("    Potential Win Hint Tokens: "+(parent.calcTokens()+27));
 
         };
         radioMed.addActionListener(listener);
         radioLow.addActionListener(listener);
         radioHigh.addActionListener(listener);
-
 
 
         AppData appData = parent.getAppData();
@@ -134,8 +141,9 @@ public class CommenceGame extends JDialog{
     private void onCancel() {
 
         if(!parent.getAppData().isMuteSounds()){ Sounds.notifySound(); }
-
+        parent.getSudokuData().setAssistanceLevel(AssistanceLevel.Full);
         if(parent.getSudokuData().isGenerated()) parent.getSudokuData().clearCells();
+        parent.getSudokuData().setGenerated(false);
         dispose();
     }
 

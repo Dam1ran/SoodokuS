@@ -31,8 +31,9 @@ public class StatsWindow extends JDialog {
     private Parent parent;
 
 
-
     StatsWindow(Parent aParent) {
+
+        setAlwaysOnTop(true);
 
         parent = aParent;
         setContentPane(contentPane);
@@ -78,9 +79,10 @@ public class StatsWindow extends JDialog {
 
         triplesLbl.setText("  Current Triples: "+frees[2]);
 
-        correctLbl.setText("  Current Sudoku correct: "+!parent.fullCheck(parent.getSudokuData().getCells()));
+        correctLbl.setText("  Current Sudoku correct: "+!Parent.fullCheck(parent.getSudokuData().getCells()));
 
-        potentialLbl.setText("  Potential Hint Tokens: "+parent.calcTokens()+" + 27 ");
+        if(parent.isCreateMode()) potentialLbl.setText("  Potential Hint Tokens: "+(parent.calcTokens()+27));
+        else potentialLbl.setText("  Potential Hint Tokens: __");
 
         startedLbl.setText("  Started Games: "+parent.getAppData().getStartedGames());
 
@@ -90,9 +92,7 @@ public class StatsWindow extends JDialog {
 
 
 
-
     }
-
 
 
 
@@ -103,7 +103,6 @@ public class StatsWindow extends JDialog {
         dispose();
 
     }
-
 
 
 }
