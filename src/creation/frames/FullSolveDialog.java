@@ -102,7 +102,6 @@ public class FullSolveDialog extends JDialog{
 
     }
 
-
     private void onInit() {
 
         operationLbl.setText("SoodokuS Generator "+'\u2122');
@@ -167,7 +166,11 @@ public class FullSolveDialog extends JDialog{
                         operationLbl.setText("Board Has Solution(s)!");
                         buttonBack.setText("OK");
                     }
-                    else operationLbl.setText("Wrong Solution...");
+                    else {
+                        operationLbl.setForeground(new Color(100, 0, 0));
+                        operationLbl.setText("Wrong Puzzle.");
+                        buttonBack.setText("Close");
+                    }
 
                     ((Timer)e.getSource()).stop();
 
@@ -193,7 +196,6 @@ public class FullSolveDialog extends JDialog{
 
         if(!parent.getAppData().isMuteSounds()) { Sounds.notifySound(); }
 
-
         if(operation.equals("fullSolve")) if(buttonBack.getText().equals("OK")) {
 
             for(int index=0;index<81;index++) {
@@ -213,13 +215,13 @@ public class FullSolveDialog extends JDialog{
 
             do {
 
-                pos = SG.getRandomNumberInRange(0,80);
+                pos = SG.getRandomNumberInRange(0, 80);
 
-            }while(parent.getSudokuData().getCell(pos / 9, pos % 9) != 0);
+            } while (parent.getSudokuData().getCell(pos / 9, pos % 9) != 0);
 
             parent.writeField(pos, String.valueOf(SG.getCells()[pos / 9][pos % 9]));
 
-            parent.progressBarText("Wrote random Cell",3000,false);
+            parent.progressBarText("Wrote random Cell", 3000, false);
 
         }
 
@@ -235,26 +237,28 @@ public class FullSolveDialog extends JDialog{
             int step;
             boolean empty = false;
 
+
             do {
 
-                step = SG.getRandomNumberInRange(0,8);
+                step = SG.getRandomNumberInRange(0, 8);
 
-                for(int index=0;index<9;index++){
+                for (int index = 0; index < 9; index++) {
 
-                    if(parent.getSudokuData().getCell(step,index)==0) empty=true;
+                    if (parent.getSudokuData().getCell(step, index) == 0) empty = true;
 
                 }
 
-            }while(!empty);
+            } while (!empty);
 
 
-            for(int index=0;index<9;index++){
+            for (int index = 0; index < 9; index++) {
 
-                parent.writeField(step*9+index, String.valueOf(SG.getCells()[step][index]));
+
+                parent.writeField(step * 9 + index, String.valueOf(SG.getCells()[step][index]));
 
             }
 
-            parent.progressBarText("Wrote random Edge",3000,false);
+            parent.progressBarText("Wrote random Edge", 3000, false);
 
         }
 
@@ -263,25 +267,27 @@ public class FullSolveDialog extends JDialog{
             int step;
             boolean empty = false;
 
+
+
             do {
 
-                step = SG.getRandomNumberInRange(0,8);
+                step = SG.getRandomNumberInRange(0, 8);
 
-                for(int index=0;index<9;index++){
+                for (int index = 0; index < 9; index++) {
 
-                    if(parent.getSudokuData().getCell(index,step)==0) empty=true;
+                    if (parent.getSudokuData().getCell(index, step) == 0) empty = true;
 
                 }
 
-            }while(!empty);
+            } while (!empty);
 
-            for(int index=0;index<9;index++){
+            for (int index = 0; index < 9; index++) {
 
-                parent.writeField(index*9+step, String.valueOf(SG.getCells()[index][step]));
+                parent.writeField(index * 9 + step, String.valueOf(SG.getCells()[index][step]));
 
             }
 
-            parent.progressBarText("Wrote random Pillar",3000,false);
+            parent.progressBarText("Wrote random Pillar", 3000, false);
 
         }
 
@@ -292,36 +298,40 @@ public class FullSolveDialog extends JDialog{
 
             do {
 
-                square = SG.getRandomNumberInRange(0,8);
+                square = SG.getRandomNumberInRange(0, 8);
 
-                int row = (square/3)*3;
-                int col = (square%3)*3;
+                int row = (square / 3) * 3;
+                int col = (square % 3) * 3;
 
-                int smallRow = row-row%3;
-                int smallCol = col-col%3;
+                int smallRow = row - row % 3;
+                int smallCol = col - col % 3;
 
                 for (int sRow = smallRow; sRow < smallRow + 3; sRow++)
-                    for (int sCol = smallCol; sCol < smallCol + 3; sCol++){
+                    for (int sCol = smallCol; sCol < smallCol + 3; sCol++) {
 
-                        if(parent.getSudokuData().getCell(sRow,sCol)==0) {square=(smallRow*3+smallCol)/3; empty=true;}
+                        if (parent.getSudokuData().getCell(sRow, sCol) == 0) {
+                            square = (smallRow * 3 + smallCol) / 3;
+                            empty = true;
+                        }
                 }
 
 
-            }while(!empty);
+            } while (!empty);
 
-            int row = (square/3)*3;
-            int col = (square%3)*3;
 
-            int smallRow = row-row%3;
-            int smallCol = col-col%3;
+
+            int row = (square / 3) * 3;
+            int col = (square % 3) * 3;
+
+            int smallRow = row - row % 3;
+            int smallCol = col - col % 3;
 
             for (int sRow = smallRow; sRow < smallRow + 3; sRow++)
-                for (int sCol = smallCol; sCol < smallCol + 3; sCol++){
-
-                    parent.writeField(sRow*9+sCol, String.valueOf(SG.getCells()[sRow][sCol]));
+                for (int sCol = smallCol; sCol < smallCol + 3; sCol++) {
+                    parent.writeField(sRow * 9 + sCol, String.valueOf(SG.getCells()[sRow][sCol]));
                 }
 
-            parent.progressBarText("Wrote random Square",3000,false);
+            parent.progressBarText("Wrote random Square", 3000, false);
 
         }
 
@@ -423,16 +433,6 @@ public class FullSolveDialog extends JDialog{
             parent.progressBarText("Wrote all "+number,3000,false);
 
         }
-
-
-
-
-
-
-
-
-
-
 
 
         if(SG!=null) {

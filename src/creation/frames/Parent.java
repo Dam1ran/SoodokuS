@@ -212,6 +212,7 @@ public class Parent extends JFrame {
 
                 if (SwingUtilities.isRightMouseButton(e)) {
 
+                    if(timerIsStarted) startStopBtn.doClick();
                     setExtendedState(JFrame.ICONIFIED);
 
                 }
@@ -378,7 +379,6 @@ public class Parent extends JFrame {
             hintsDialog.pack();
             hintsDialog.setLocation(getLocation().x, getLocation().y+1);
             hintsDialog.setVisible(true);
-
 
 /*
 
@@ -918,7 +918,6 @@ public class Parent extends JFrame {
 
     }
 
-
     public static boolean fullCheck(int[][] aCells){
 
         boolean duplicate = false;
@@ -1040,14 +1039,18 @@ public class Parent extends JFrame {
         ArrayList<Integer> listOfDoublesIndexes = new ArrayList<>();
         ArrayList<Integer> listOfTriplesIndexes = new ArrayList<>();
 
+        boolean wrote=false;
+
         for (int row = 0; row < 9; row++) for (int col = 0; col < 9; col++) { int index = row * 9 + col;
 
             if (sudokuData.getCell(row, col) == 0) { listOfAvailableNumbers = getAvailableNumbers(index);
 
                 if (listOfAvailableNumbers.size() == 1) {
                     if(aWriteSingles) {
+                        if(listOfAvailableNumbers.get(0)!=0) {
                         fldNames.get(index).setText(listOfAvailableNumbers.get(0).toString());
                         updateCell(index);
+                        wrote=true;}
                     }
 
                     listOfSinglesIndexes.add(index);
@@ -1069,7 +1072,7 @@ public class Parent extends JFrame {
 
             }
 
-            if(aWriteSingles && singles!=0) {
+            if(aWriteSingles && singles!=0 && wrote) {
                 progressBarText("Wrote Singles",3000,false);
             }
 
@@ -1129,8 +1132,6 @@ public class Parent extends JFrame {
 
 
     }
-
-
 
     private void onNewGame(){
 
@@ -1213,6 +1214,12 @@ public class Parent extends JFrame {
 
         if(!appData.isMuteSounds()) {Sounds.commence();}
 
+    }
+
+    boolean isFull(){
+
+        for (int row = 0; row < 9; row++)  for (int col = 0; col < 9; col++) if(sudokuData.getCell(row,col)==0) return true;
+        return false;
     }
 
     private void loadBtnFire(){
@@ -1661,7 +1668,7 @@ public class Parent extends JFrame {
 
         if(!appData.isMuteSounds()) {Sounds.wonGame();}
 
-        progressBarText("Congratulations", 5000, false);
+        progressBarText("Congratulations!", 5000, false);
 
         int intermediateCalc = calcTokens();
         java.util.Timer timerDrain = new java.util.Timer();
@@ -2139,9 +2146,11 @@ public class Parent extends JFrame {
 
                     if(loadedSudokuData!=null){
 
-                        sudokuData=loadedSudokuData;
-                        onLoadGame();
-                        progressBarText("Loaded Months Save File",2500,false);
+                        if (!loadedSudokuData.isWon()) {
+                            sudokuData=loadedSudokuData;
+                            onLoadGame();
+                            progressBarText("Loaded Months Save File",2500,false);
+                        }
 
                     }
                     else progressBarText("Missing Months Save File",2500,true);
@@ -2289,50 +2298,6 @@ public class Parent extends JFrame {
         }
 
     }
-
-  /*  private class FocusHelper extends TimerTask{
-
-        private int focusTo;
-
-        FocusHelper(int aPos){
-            focusTo=aPos;
-        }
-
-        public void run() {
-
-            if (focusTo == sudokuData.getFocusPos()) {
-
-                int pos = getCellFreeWeight(false)[3];
-
-                if (pos != -1) {
-
-                    if (pos != sudokuData.getFocusPos()) {
-
-                        fldNames.get(pos).grabFocus();
-
-                        sudokuData.setFocusPos(pos);
-
-                        appData.decreaseTokens(1);
-
-                        if (fio.onExit()) progressBarText("Error", 2500, false);
-
-                        hintBtn.setToolTipText("Available Hint Tokens: " + appData.getGameTokens());
-
-                        progressBarText("Target Cell Moved, Hint Token Deducted", 4000, false);
-
-                    }
-
-                    if (!appData.isMuteSounds()) {  Sounds.helper();  }
-
-                    alterFieldColor(pos, new Color(200, 255, 200), 2000, "background");
-
-                }
-
-            }
-
-        }
-
-    }*/
 
     private static class ProgressPainter implements Painter {
 

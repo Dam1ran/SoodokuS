@@ -154,7 +154,7 @@ public class OptionsDialog extends JDialog {
         parent.setVisible(false);
         setVisible(false);
 
-        ByeDialog byeDialog = new ByeDialog("ZeWolf, See you soon!",parent);
+        ByeDialog byeDialog = new ByeDialog("Mime, See you soon!",parent);
         byeDialog.setUndecorated(true);
         byeDialog.pack();
         byeDialog.setLocation(parent.getLocation().x, parent.getLocation().y+200);

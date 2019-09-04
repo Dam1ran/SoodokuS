@@ -91,7 +91,7 @@ public class HintsDialog extends JDialog {
         else checkSolutionBtn.setEnabled(false);
         checkSolutionBtn.addActionListener(e -> onCheckSolution());
 
-        if(parent.getAppData().getGameTokens()>9) randomBtn.setEnabled(true);
+        if(parent.getAppData().getGameTokens()>9 && parent.isFull()) randomBtn.setEnabled(true);
         else randomBtn.setEnabled(false);
         randomBtn.addActionListener(e -> onRandomCell());
 
@@ -104,8 +104,7 @@ public class HintsDialog extends JDialog {
         singlesBtn.addActionListener(e -> onSingles());
 
 
-
-        if(parent.getAppData().getGameTokens()>44) {
+        if(parent.getAppData().getGameTokens()>44 && parent.isFull()) {
             randomRowBtn.setEnabled(true);
             randomColBtn.setEnabled(true);
             randomSquareBtn.setEnabled(true);
@@ -184,9 +183,7 @@ public class HintsDialog extends JDialog {
         fullSolveDialog.setLocation(parent.getLocation().x + 95, parent.getLocation().y + fullSolveDialog.getHeight()*2 + 11);
         fullSolveDialog.setVisible(true);
 
-
         dispose();
-
 
     }
 

@@ -53,7 +53,7 @@ public class AboutDialog extends JDialog {
                 "Those puzzles that has no solutions are solved even quicker.\n" +
                 "    When Generating new Game, Generator creates initial number pattern, then feed it to SoodokuS Generator™ " +
                 "(although SoodokuS Generator™ return different puzzles even from blank board).\n" +
-                "    If a solution is found then certain numbers are cleared from the board so all small squares has approximately same number of clues.\n" +
+                "    If a solution is found then certain numbers are cleared from the board so all numbers has approximately same distribution.\n" +
                 "Number of remaining clues is set as Difficulty.\n\n" +
                 "    This board has assistance which makes Game experience better.\n\n" +
                 "    Harder the difficulty, less assistance level, and less time spent leads to more earned Hint Tokens." +
@@ -61,7 +61,7 @@ public class AboutDialog extends JDialog {
                 "Diagonals constraint is not set, however it can give bonus Tokens.\n\n" +
                 "    User can Set his puzzle also, SoodokuS(tar) will count initial clues and it will assign a difficulty to it.\n" +
                 "    Adding Hint concept makes this Game little more attractive, User can use Hint Tokens at will, to help solve Sudoku puzzle.\n\n" +
-                "   Before Hint is requested, SoodokuS Generator™ will try to solve The board, if there is a solution then Hint is applied at choice\n" +
+                "    Before Hint is requested(except writing singles), SoodokuS Generator™ will try to solve The board, if there is a solution then Hint is applied at choice\n" +
                 "\n" +
                 "    In dependency which Assistance level is selected SoodokuS(star) will apply natural restrictions." +
                 " Also if mouse wheel is pressed board will help find best possible cell" +

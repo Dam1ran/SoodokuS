@@ -144,7 +144,7 @@ public class NumberPalette extends JDialog {
 
             aParent.writeField(aIndex, e.getActionCommand());
 
-            if(!aParent.getAppData().isMuteSounds()) { Sounds.notifySound(); }
+            if(!aParent.getAppData().isMuteSounds()) { Sounds.wheelRotate(); }
 
             onCancel();
 

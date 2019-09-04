@@ -139,7 +139,7 @@ public class SudokuGenerator extends Thread {
     }
 
     private boolean sweepBoard(){
-
+/*
         int[] squareFillRatio=new int[9];
 
         for(int row=0;row<9;row+=3) for(int col=0;col<9;col+=3){
@@ -169,18 +169,75 @@ public class SudokuGenerator extends Thread {
                 index = i;
             }
 
+        }*/
+
+//==============================================
+        int[] numbersInstances = new int[9];
+        for(int i = 0; i <81;i++) {
+
+            if(cells[i/9][i%9]!=0)
+                numbersInstances[cells[i/9][i%9]-1]++;
+
         }
 
-        int row = getRandomNumberInRange((smallSpiral[index]/3)*3,(smallSpiral[index]/3)*3+2);
-        int col = getRandomNumberInRange((smallSpiral[index]%3)*3,(smallSpiral[index]%3)*3+2);
+        int maxN = numbersInstances[0];
+        int number = 0;
+        for (int i=1; i<9; i++) {
 
+            if (numbersInstances[i] > maxN) {
+                maxN = numbersInstances[i];
+                number = i;
+            }
+
+        }
+
+        System.out.println("max number: "+(number+1));
+
+//============================================================================
+
+       /* int row = getRandomNumberInRange((smallSpiral[index]/3)*3,(smallSpiral[index]/3)*3+2);
+        int col = getRandomNumberInRange((smallSpiral[index]%3)*3,(smallSpiral[index]%3)*3+2);*/
+
+  /*      int row = aIndex/9;
+        int col = aIndex%9;
+
+        int smallRow = row - row % 3;
+        int smallCol = col - col % 3;*/
+       /*
+       int squareRow = (smallSpiral[index]/3)*3;
+       int squareCol = (smallSpiral[index]%3)*3;*/
+
+       int rindex = getRandomNumberInRange(0,80);
+
+       /*for(int sRow=0;sRow < 9;sRow++) {
+           for(int sCol=0;sCol < 9;sCol++) {*/
+
+               if(cells[rindex/9][rindex%9]==(number+1)) {
+                   cells[rindex/9][rindex%9] = 0;
+                   return true;
+               }
+
+/*           }
+       }*/
+
+
+           /*for(int sCol=squareCol;sCol < squareCol+3;sCol++) {
+
+           if(cells[sRow][sCol]==(number+1)) cells[sRow][sCol]=0;
+           return true;
+
+       }*/
+
+       return false;
+
+      /*
         if(cells[row][col]!=0) {
-            cells[row][col]= 0;
+            cells[row][col] = 0;
             return true;
         }
         else{
             return false;
-        }
+        }*/
 
     }
 
