@@ -1,10 +1,10 @@
-# SoodokuS
+# SoodokuS:star:
 
 ## Made By Damiran - 2019
-  
+
 ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SoodokuS(tar) was made as an inspiration to for solving a Sudoku puzzle
     
-&nbsp;&nbsp;&nbsp;&nbsp;The main idea was to be able to create/implement Enchanted Hybrid Recursive Backtrack solving algorithm.
+&nbsp;&nbsp;&nbsp;&nbsp;The main idea was to be able to create/implement **_Enchanted Hybrid Recursive-Backtrack_** solving algorithm.
     
 &nbsp;&nbsp;&nbsp;&nbsp;It can solve quickly any Sudoku puzzle.
 Even the most difficult(solvable) Sudoku puzzle found was solved in around one second on my machine. Those puzzles that has no solutions are solved even quicker.
