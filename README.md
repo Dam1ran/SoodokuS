@@ -1,5 +1,5 @@
 # SoodokuS:star:
-
+Full featured Sudoku board game.
 ## Made By Damiran - 2019
 
 ### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SoodokuS(tar) was made as an inspiration to for solving a Sudoku puzzle
