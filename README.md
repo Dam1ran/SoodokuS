@@ -1,41 +1,44 @@
 # SoodokuS
 
-  Made By Damiran - 2019
+## Made By Damiran - 2019
   
-      SoodokuS(tar) was made as an inspiration to for solving a Sudoku puzzle.
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SoodokuS(tar) was made as an inspiration to for solving a Sudoku puzzle
     
-    The main idea was to be able to create/implement Enchanted Hybrid Recursive Backtrack solving algorithm.
+&nbsp;&nbsp;&nbsp;&nbsp;The main idea was to be able to create/implement Enchanted Hybrid Recursive Backtrack solving algorithm.
     
-    Which can solve quickly any Sudoku puzzle.
-    Even the most difficult(solvable) Sudoku puzzle found was solved in around one second on my machine.    
-    Those puzzles that has no solutions are solved even quicker.
+&nbsp;&nbsp;&nbsp;&nbsp;It can solve quickly any Sudoku puzzle.
+Even the most difficult(solvable) Sudoku puzzle found was solved in around one second on my machine. Those puzzles that has no solutions are solved even quicker.
     
-    Java Swing was used, program runs smoothly, has sounds and perfectly is controlled by mouse and wheel, more (details in options section)
-    Can save/load boards, has hint tokens which are made by solving boards
+&nbsp;&nbsp;&nbsp;&nbsp;**Java Swing was used, program runs smoothly, has sounds and perfectly is controlled by mouse and wheel, more (details in options section). Can save/load boards, has hint tokens which are made by solving boards.**
     
-   ## some of the screens:
+   ## Some of the screen shots:   
    
-   ### main view
+   ### Main view:
+   <p align="center">        
+    <img src="SoodokuS%20screens/main.jpg">
+   </p>
    
-   <img src="SoodokuS%20screens/main.jpg">
+   ### About view:
+   <p align="center">
+    <img src="SoodokuS%20screens/about.jpg">
+   </p>
    
-   ### about view
+   ### Load/Save view:
+   <p align="center">  
+    <img src="SoodokuS%20screens/loadSave.jpg">
+   </p>
    
-   <img src="SoodokuS%20screens/about.jpg">
+   ### Create view:
+   <p align="center">  
+    <img src="SoodokuS%20screens/create.jpg">
+   </p>
    
-   ### load/save view
+   ### Options view:
+   <p align="center">  
+    <img src="SoodokuS%20screens/options.jpg">
+   </p>
    
-   <img src="SoodokuS%20screens/loadSave.jpg">
-
-   ### create view
-   
-   <img src="SoodokuS%20screens/create.jpg">
-
-   ### options view
-   
-   <img src="SoodokuS%20screens/options.jpg">
-   
-   ### settings view
-   
-   <img src="SoodokuS%20screens/settings.jpg">
-
+   ### Settings view:
+   <p align="center">  
+    <img src="SoodokuS%20screens/settings.jpg">
+   </p>
