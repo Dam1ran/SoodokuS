@@ -13,36 +13,29 @@
     Java Swing was used, program runs smoothly, has sounds and perfectly is controlled by mouse and wheel, more (details in options section)
     Can save/load boards, has hint tokens which are made by solving boards
     
-    <h1>some of the screens:</h1>
-    <br/>
-    
-   <h2>main view</h2>
-<br/>
-https://github.com/Dam1ran/SoodokuS/blob/master/SoodokuS%20screens/main.jpg?raw=true
-<br/>
+   ## some of the screens:
+   
+   ### main view
+   
+   <img src="SoodokuS%20screens/main.jpg">
+   
+   ### about view
+   
+   <img src="SoodokuS%20screens/about.jpg">
+   
+   ### load/save view
+   
+   <img src="SoodokuS%20screens/loadSave.jpg">
 
-    load/save view
-<br/>
-https://github.com/Dam1ran/SoodokuS/blob/master/SoodokuS%20screens/loadSave.jpg?raw=true
-<br/>
+   ### create view
+   
+   <img src="SoodokuS%20screens/create.jpg">
 
-    create view
-<br/>
-https://github.com/Dam1ran/SoodokuS/blob/master/SoodokuS%20screens/create.jpg?raw=true
-<br/>
-
-    about view
-<br/>
-https://github.com/Dam1ran/SoodokuS/blob/master/SoodokuS%20screens/about.jpg?raw=true
-<br/>
-
-    options view
-<br/>
-https://github.com/Dam1ran/SoodokuS/blob/master/SoodokuS%20screens/options.jpg?raw=true
-<br/>
-
-    settings view
-<br/>
-https://github.com/Dam1ran/SoodokuS/blob/master/SoodokuS%20screens/settings.jpg?raw=true
-<br/>
+   ### options view
+   
+   <img src="SoodokuS%20screens/options.jpg">
+   
+   ### settings view
+   
+   <img src="SoodokuS%20screens/settings.jpg">
 
