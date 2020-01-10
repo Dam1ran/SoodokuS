@@ -9,7 +9,7 @@ Full featured Sudoku board game.
 &nbsp;&nbsp;&nbsp;&nbsp;It can solve quickly any Sudoku puzzle.
 Even the most difficult(solvable) Sudoku puzzle found was solved in around one second on my machine. Those puzzles that has no solutions are solved even quicker.
     
-&nbsp;&nbsp;&nbsp;&nbsp;**Java JFrame was used, program runs smoothly, has sounds and perfectly is controlled by mouse and wheel, more (details in options section). Can save/load boards, has hint tokens which are made by solving boards.**
+&nbsp;&nbsp;&nbsp;&nbsp;**Java JFrame was used, program runs smoothly, has sounds and perfectly is controlled by mouse and wheel, more (details in Settings section). Can save/load boards, has hint tokens which are made by solving boards.**
     
    ## Some of the screen shots:   
    
